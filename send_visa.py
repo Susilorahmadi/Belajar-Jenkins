@@ -2,12 +2,7 @@ import json, requests
 import logging
 from wsgiref import headers
 from ast import literal_eval
-from visa_MLE import myKey_ID,server_cert,cert,key,user_id,password,private_key,headers,encrypt,decrypt,date,systemsTraceAuditNumber,retrievalReferenceNumber
-import random
-
-
-
-senderReferenceNumber = str(random.randint(1000000000,9999999999))
+from visa_MLE import myKey_ID,server_cert,cert,key,user_id,password,private_key,headers,encrypt,decrypt,date,systemsTraceAuditNumber,retrievalReferenceNumber,senderReferenceNumber
 
 payload = json.loads('''
 {
@@ -97,7 +92,8 @@ def statusCode():
     print("200")
     print("BankID : " + valid())
 
-
+print("*****************************")
+print(payload)
 print("*****************************")
 responseSendPayout()
 statusCode()
