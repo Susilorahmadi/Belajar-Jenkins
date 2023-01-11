@@ -1,9 +1,9 @@
 pipeline {
-    agent {
-        node {
-            label 'main'
-        }
-    }
+    // agent {
+    //     node {
+    //         label 'main'
+    //     }
+    // }
 
     environment {
         // GIT_URL = 'gitlab.bni.co.id/rpv/microservice-agent46/stingray.git'
