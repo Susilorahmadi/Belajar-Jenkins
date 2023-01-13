@@ -7,6 +7,4 @@ functions:
     lang: python3-http
     handler: ./seasson
     image: seasson:latest
-    environment:
-      JENKINS_LOCAL: localhost:8086
 
