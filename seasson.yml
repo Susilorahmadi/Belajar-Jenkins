@@ -8,5 +8,5 @@ functions:
     handler: ./seasson
     image: seasson:latest
     environment:
-      jenkins: localhost:8086
+      JENKINS_LOCAL: localhost:8086
 
