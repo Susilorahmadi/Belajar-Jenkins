@@ -7,4 +7,6 @@ functions:
     lang: python3-http
     handler: ./seasson
     image: seasson:latest
+    environment:
+      jenkins: localhost:8086
 
