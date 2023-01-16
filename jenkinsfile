@@ -39,12 +39,15 @@ pipeline {
             }
         }
 
-        stage ('Checkout') {
-            svn 'https://svn.mycorp/trunk/'
-            stage 'Build'
-            sh 'make all'
-            stage 'Test'
-            sh 'make test'
+        stage ('Checkout') 
+            steps{
+                script{
+                    svn 'https://svn.mycorp/trunk/'
+                    stage 'Build'
+                    sh 'make all'
+                    stage 'Test'
+                    sh 'make test'
+                }
         }
 
         // stage('Clean package') {
