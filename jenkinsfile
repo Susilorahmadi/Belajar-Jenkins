@@ -31,7 +31,7 @@ pipeline {
                     try {
                         // sh 'git clone https://oauth2:${PERSONAL_ACCESS_TOKEN}@${GIT_URL}'
                         sh 'git clone ${GIT_URL}'
-                        sh 'git checkout ${BRANCH_NAME}'
+                        // sh 'git checkout ${BRANCH_NAME}'
                     } catch (err) {
                         echo 'Exception occurred: ' + err.getMessage()
                     }
