@@ -1,16 +1,10 @@
 pipeline {
-    // agent any
-    agent {
-        node {
-            stage ('Checkout') {
-                svn 'https://svn.mycorp/trunk/'
-                stage 'Build'
-                sh 'make all'
-                stage 'Test'
-                sh 'make test'
-            }
-        }
-    }
+    agent any
+    // agent {
+    //     node {
+    //         label 'main'
+    //     }
+    // }
 
     environment {
         // GIT_URL = 'gitlab.bni.co.id/rpv/microservice-agent46/stingray.git'
