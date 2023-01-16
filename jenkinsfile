@@ -1,10 +1,16 @@
 pipeline {
     agent any
-    // agent {
-    //     node {
-    //         label 'main'
-    //     }
-    // }
+    agent {
+        node {
+            stage ('Checkout') {
+                svn 'https://svn.mycorp/trunk/'
+                stage 'Build'
+                sh 'make all'
+                stage 'Test'
+                sh 'make test'
+            }
+        }
+    }
 
     environment {
         // GIT_URL = 'gitlab.bni.co.id/rpv/microservice-agent46/stingray.git'
@@ -35,18 +41,6 @@ pipeline {
                     } catch (err) {
                         echo 'Exception occurred: ' + err.getMessage()
                     }
-                }
-            }
-        }
-
-        stage ('Checkout') {
-            steps{
-                script{
-                    svn 'https://svn.mycorp/trunk/'
-                    stage 'Build'
-                    sh 'make all'
-                    stage 'Test'
-                    sh 'make test'
                 }
             }
         }
