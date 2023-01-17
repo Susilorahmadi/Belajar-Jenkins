@@ -35,19 +35,19 @@ pipeline {
         }
     
 
-        stage('Checkout & Clone Source DEV') {
-            steps {
-                script {
-                    try {
-                        // sh 'git clone https://oauth2:${PERSONAL_ACCESS_TOKEN}@${GIT_URL}'
-                        sh 'git clone ${GIT_URL}'
-                        // sh 'git checkout ${BRANCH_NAME}'
-                    } catch (err) {
-                        echo 'Exception occurred: ' + err.getMessage()
-                    }
-                }
-            }
-        }
+        // stage('Checkout & Clone Source DEV') {
+        //     steps {
+        //         script {
+        //             try {
+        //                 // sh 'git clone https://oauth2:${PERSONAL_ACCESS_TOKEN}@${GIT_URL}'
+        //                 sh 'git clone ${GIT_URL}'
+        //                 // sh 'git checkout ${BRANCH_NAME}'
+        //             } catch (err) {
+        //                 echo 'Exception occurred: ' + err.getMessage()
+        //             }
+        //         }
+        //     }
+        // }
 
         // stage('Clean package') {
         //     tools {
