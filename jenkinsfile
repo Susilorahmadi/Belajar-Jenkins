@@ -25,6 +25,17 @@ pipeline {
             }
         }
 
+        stage {
+            stage('http') {
+                steps {
+                    sh 'echo "using httpRequest"'
+                    httpRequest consoleLogResponseBody: true, url: 'https://reqres.in/api/users'
+                    sh 'echo "using curl"'
+                    sh 'curl https://reqres.in/api/users'
+                }
+            }
+        }
+
         stage('Checkout & Clone Source DEV') {
             steps {
                 script {
