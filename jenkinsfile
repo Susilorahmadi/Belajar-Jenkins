@@ -4,7 +4,7 @@ pipeline {
         stage('http') {
             steps {
                 echo "using httpRequest"'
-                httpRequest consoleLogResponseBody: true, url: 'https://reqres.in/api/users'
+                httpRequest responseHandle: 'NONE', url: 'https://reqres.in/api/users', wrapAsMultipart: false
                 echo "using curl"'
                 bat curl https://reqres.in/api/users'
             }
