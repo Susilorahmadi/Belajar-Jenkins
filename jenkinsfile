@@ -3,10 +3,10 @@ pipeline {
     stages {
         stage('http') {
             steps {
-                sh 'echo "using httpRequest"'
+                echo "using httpRequest"'
                 httpRequest consoleLogResponseBody: true, url: 'https://reqres.in/api/users'
-                sh 'echo "using curl"'
-                sh 'curl https://reqres.in/api/users'
+                echo "using curl"'
+                bat curl https://reqres.in/api/users'
             }
         }
     }
