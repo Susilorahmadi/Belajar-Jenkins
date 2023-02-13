@@ -1,12 +1,26 @@
 pipeline {
     agent any
+
     stages {
-        stage('http') {
-            steps {
-                echo "using httpRequest"'
-                httpRequest responseHandle: 'NONE', url: 'https://reqres.in/api/users', wrapAsMultipart: false
-                echo "using curl"'
-                bat curl https://reqres.in/api/users'
+        stage('Checkout') {
+            steps {checkout scmGit(branches: [[name: '*/new-dev']], extensions: [], userRemoteConfigs: [[credentialsId: 'Susilorahmadi', url: 'https://github.com/Susilorahmadi/Belajar-Jenkins.git']])
+            }
+        }
+        
+        stage('Build'){
+            steps{
+                git branch: 'new-dev', credentialsId: 'Susilorahmadi', url: 'https://github.com/Susilorahmadi/Belajar-Jenkins.git'
+                bat label: '',script: 'curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py'
+                bat label: '',script: 'py get-pip.py'
+                bat label: '',script: 'py -m pip install --upgrade pip setuptools'
+                bat label: '',script: 'py -m pip install -r seasson/requirements.txt'
+            }
+        }
+        
+        stage('Test'){
+            steps{
+                echo 'the job has on tester'
+                bat label: '',script: 'py seasson/web_server.py'
             }
         }
     }
