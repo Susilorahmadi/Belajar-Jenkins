@@ -3,7 +3,6 @@ pipeline {
 
     stages {
         stage('Checkout') {
-            
             steps {checkout scmGit(branches: [[name: '*/new-dev']], extensions: [], userRemoteConfigs: [[credentialsId: 'Susilorahmadi', url: 'https://github.com/Susilorahmadi/Belajar-Jenkins.git']])
             }
         }
