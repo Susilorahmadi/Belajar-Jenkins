@@ -30,6 +30,7 @@ pipeline {
             steps{
                 withDockerRegistry([ credentialsId: "ed5a3a2a-09d9-4703-bd57-150c9bd48824", url: "" ])
                     bat label: '',script: 'docker build ./Dockerfile .'
+                    
             }
         }
 
