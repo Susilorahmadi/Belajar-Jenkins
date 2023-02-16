@@ -3,7 +3,8 @@ pipeline {
 
     stages {
         stage('Checkout') {
-            steps {checkout scmGit(branches: [[name: '*/new-dev']], extensions: [], userRemoteConfigs: [[credentialsId: 'Susilorahmadi', url: 'https://github.com/Susilorahmadi/Belajar-Jenkins.git']])
+            steps {checkout scmGit(branches: [[name: '*/new-dev']], extensions: [], 
+            userRemoteConfigs: [[credentialsId: 'Susilorahmadi', url: 'https://github.com/Susilorahmadi/Belajar-Jenkins.git']])
             }
         }
         
@@ -15,7 +16,7 @@ pipeline {
             }
         }
         
-        stage('install pakages'){
+        stage('install packages'){
             steps{
                 bat label: '',script: 'py get-pip.py'
                 bat label: '',script: 'py -m pip install --upgrade pip setuptools'
@@ -27,14 +28,14 @@ pipeline {
 
         stage('Build Docker'){
             steps{
-                bat label: '',script: 'docker build -t belajar-jenkins:v${env.BUILD_ID} -f ./Dockerfile .'
+                bat label: '',script: 'docker build belajar-jenkins:v${env.BUILD_ID} -f ./Dockerfile .'
                 bat label: '',script: 'docker tag belajar-jenkins:v${env.BUILD_ID} belajar-jenkins:latest'
             }
         }
 
         stage('push'){
             steps{
-                withDockerRegistry([ credentialsId: "8cb91394-2af2-4477-8db8-8c0e13605900", url: "" ]){
+                withDockerRegistry([ credentialsId: "ed5a3a2a-09d9-4703-bd57-150c9bd48824", url: "" ]){
                     bat label: '',script: 'docker push belajar-jenkins:v${env.BUILD_ID}'
                     bat label: '',script: 'docker push belajar-jenkins:latest'
                 }
