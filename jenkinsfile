@@ -7,20 +7,37 @@ pipeline {
             }
         }
         
-        stage('Build'){
+        stage('clone'){
             steps{
                 git branch: 'new-dev', credentialsId: 'Susilorahmadi', url: 'https://github.com/Susilorahmadi/Belajar-Jenkins.git'
                 bat label: '',script: 'curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py'
-                bat label: '',script: 'py get-pip.py'
-                bat label: '',script: 'py -m pip install --upgrade pip setuptools'
-                bat label: '',script: 'py -m pip install -r seasson/requirements.txt'
+                
             }
         }
         
-        stage('Test'){
+        stage('install pakages'){
             steps{
-                echo 'the job has on tester'
+                bat label: '',script: 'py get-pip.py'
+                bat label: '',script: 'py -m pip install --upgrade pip setuptools'
+                bat label: '',script: 'py -m pip install -r seasson/requirements.txt'
+                // echo 'the job has on tester'
                 // bat label: '',script: 'py seasson/web_server.py'
+            }
+        }
+
+        stage('Build Docker'){
+            steps{
+                bat label: '',script: 'docker build -t belajar-jenkins:v${env.BUILD_ID} -f ./Dockerfile .'
+                bat label: '',script: 'docker tag belajar-jenkins:v${env.BUILD_ID} belajar-jenkins:latest'
+            }
+        }
+
+        stage('push'){
+            steps{
+                withDockerRegistry([ credentialsId: "8cb91394-2af2-4477-8db8-8c0e13605900", url: "" ]){
+                    bat label: '',script: 'docker push belajar-jenkins:v${env.BUILD_ID}'
+                    bat label: '',script: 'docker push belajar-jenkins:latest'
+                }
             }
         }
     }
