@@ -28,7 +28,7 @@ pipeline {
 
         stage('Build Docker'){
             steps{
-                bat label: '',script: 'docker build ./Dockerfile .'
+                bat label: '',script: 'docker build -t belajar-jenkins:latest .'
             }
         }
 
