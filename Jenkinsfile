@@ -1,107 +1,43 @@
 pipeline {
     agent any
-    // agent {
-    //     node {
-    //         label 'main'
-    //     }
-    // }
-
-    environment {
-        // GIT_URL = 'gitlab.bni.co.id/rpv/microservice-agent46/stingray.git'
-        // GIT_TESTING_URL = 'gitlab.bni.co.id/rpv/microservice-agent46/testscript_newbackend.git'
-        // HARBOR_REPO_URL = 'jtl-tkgiharbor.hq.bni.co.id'
-        // PERSONAL_ACCESS_TOKEN = 'yyg8pbeNGR-2aNGsLTVU'
-        // BRANCH_NAME = 'testingcicd'
-        // REPO_NAME = 'stingray'
-        GIT_URL = 'https://github.com/Susilorahmadi/Belajar-Jenkins.git'
-        BRANCH_NAME = 'main'
-    }
 
     stages {
-        stage('Fetch Source Build Server') {
-            steps {
-                cleanWs()
-                checkout scm
+        stage('Checkout') {
+            steps {checkout scmGit(branches: [[name: '*/new-dev']], extensions: [], 
+            userRemoteConfigs: [[credentialsId: 'Susilorahmadi', url: 'https://github.com/Susilorahmadi/Belajar-Jenkins.git']])
+            }
+        }
+        
+        stage('clone'){
+            steps{
+                git branch: 'new-dev', credentialsId: 'Susilorahmadi', url: 'https://github.com/Susilorahmadi/Belajar-Jenkins.git'
+                bat label: '',script: 'curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py'
+                
+            }
+        }
+        
+        stage('install packages'){
+            steps{
+                bat label: '',script: 'py get-pip.py'
+                bat label: '',script: 'py -m pip install --upgrade pip setuptools'
+                bat label: '',script: 'py -m pip install -r seasson/requirements.txt'
+                // echo 'the job has on tester'
+                // bat label: '',script: 'py seasson/web_server.py'
             }
         }
 
-        stage('Checkout & Clone Source DEV') {
-            steps {
-                script {
-                    try {
-                        // sh 'git clone https://oauth2:${PERSONAL_ACCESS_TOKEN}@${GIT_URL}'
-                        sh 'git clone ${GIT_URL}'
-                        // sh 'git checkout ${BRANCH_NAME}'
-                    } catch (err) {
-                        echo 'Exception occurred: ' + err.getMessage()
-                    }
+        stage('Build Docker'){
+            steps{
+                bat label: '',script: 'docker build -t belajar-jenkins:latest .'
+            }
+        }
+
+        stage('push'){
+            steps{
+                withDockerRegistry([ credentialsId: "ed5a3a2a-09d9-4703-bd57-150c9bd48824", url: "" ]){
+                    bat label: '',script: 'docker push belajar-jenkins:latest'
                 }
             }
         }
-
-        // stage('Clean package') {
-        //     tools {
-        //         maven 'maven383'
-        //         jdk 'Java8'
-        //     }
-        //     steps {
-        //         script {
-		//     sh 'export http_proxy=http://192.168.45.194:8080/'
-		//     sh 'export https_proxy=http://192.168.45.194:8080/'
-        //             sh 'mvn -Dhttps.proxyHost=inet.bni.co.id -Dhttps.proxyPort=8080 -Dmaven.test.skip=true clean package'
-        //         }
-        //     }
-        // }
-
-        // stage('Build image & Push to harbor') {
-        //     steps {
-        //         withCredentials([usernamePassword(credentialsId: '12654068-f992-4141-89e2-8624ca352618', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-        //             sh 'docker login -u $USERNAME -p $PASSWORD ${HARBOR_REPO_URL}'
-        //             sh 'docker build -t jtl-tkgiharbor.hq.bni.co.id/agent46-backend/${REPO_NAME}:latest .'
-        //             sh 'docker push jtl-tkgiharbor.hq.bni.co.id/agent46-backend/${REPO_NAME}:latest'
-        //         }
-        //     }
-        // }
-
-        // stage('Apply') {
-        //     steps {
-        //         withCredentials([usernamePassword(credentialsId: '12654068-f992-4141-89e2-8624ca352618', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-        //             sh 'tkgi get-kubeconfig soa-api-dev -a jtl-tkgiapi.hq.bni.co.id -u $USERNAME -p $PASSWORD -k'
-        //             sh 'kubectl config use-context soa-api-dev'
-        //             sh 'kubectl apply -f deployment.yaml -n agent46-backend'
-        //         }
-        //     }
-        // }
-
-        // stage('Restart') {
-        //     steps {
-        //         script {
-        //             sh 'sleep 3'
-        //             sh 'kubectl rollout restart deployment ${REPO_NAME} --namespace agent46-backend'
-        //         }
-        //     }
-        // }
-
-        // stage('Test(s)') {
-        //     steps {
-        //         script {
-        //             try {
-        //                 echo 'Project team(s) to add the test cases here in order to run as part of pipeline'
-		// 	echo 'No test(s) here to execute'
-        //                 //sh 'sleep 60'
-        //                 //sh """
-        //                 //git clone https://oauth2:${PERSONAL_ACCESS_TOKEN}@${GIT_TESTING_URL}
-        //                 //cd testscript_newbackend
-        //                 //git checkout ${BRANCH_NAME}
-        //                 //pip3 install --proxy http://192.168.45.105:8080 pytest
-        //                 //pip3 install --proxy http://192.168.45.105:8080 requests
-		// 	//pytest test-cases/test_84_getParameterELO.py
-        //                // """
-        //             } catch (err) {
-        //                 echo 'Exception occurred: ' + err.getMessage()
-        //             }
-        //         }
-        //     }
-        // }
     }
 }
