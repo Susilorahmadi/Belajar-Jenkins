@@ -28,15 +28,8 @@ pipeline {
 
         stage('Build Docker'){
             steps{
-                bat label: '',script: 'docker build -t belajar-jenkins:latest .'
-            }
-        }
-
-        stage('push'){
-            steps{
-                withDockerRegistry([ credentialsId: "ed5a3a2a-09d9-4703-bd57-150c9bd48824", url: "" ]){
-                    bat label: '',script: 'docker push belajar-jenkins:latest'
-                }
+                bat label: '',script: 'faas-cli template pull https://github.com/openfaas-incubator/python-flask-template'
+                bat label: '',script: 'faas-cli build ./jenkins.yml'
             }
         }
     }
