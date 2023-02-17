@@ -10,7 +10,7 @@ pipeline {
         
         stage('clone'){
             steps{
-                git branch: 'new-dev', credentialsId: 'Susilorahmadi', url: 'https://github.com/Susilorahmadi/Belajar-Jenkins.git'
+                git branch: 'tutor', credentialsId: 'Susilorahmadi', url: 'https://github.com/Susilorahmadi/Belajar-Jenkins.git'
                 bat label: '',script: 'curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py'
                 
             }
