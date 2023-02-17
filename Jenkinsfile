@@ -20,7 +20,7 @@ pipeline {
             steps{
                 bat label: '',script: 'py get-pip.py'
                 bat label: '',script: 'py -m pip install --upgrade pip setuptools'
-                bat label: '',script: 'py -m pip install -r seasson/requirements.txt'
+                bat label: '',script: 'py -m pip install -r jenkins/requirements.txt'
                 // echo 'the job has on tester'
                 // bat label: '',script: 'py seasson/web_server.py'
             }
