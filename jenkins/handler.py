@@ -5,7 +5,8 @@ logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s',level=loggi
 def handle(e, c):
     _fullPath   = e.path
     logging.info("=========== START REQUEST ===========")
-    logging.info(e.path)
+    logging.info(_fullPath)
+    logging.info("=========== Response ============")
     
     if "/inquiry" in _fullPath :
         inquiry = 'Anda sedang melakukan inquery'
