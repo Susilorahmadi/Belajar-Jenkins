@@ -29,7 +29,7 @@ pipeline {
         stage('Build Docker'){
             steps{
                 bat label: '',script: 'faas-cli template pull https://github.com/openfaas-incubator/python-flask-template'
-                bat label: '',script: 'faas-cli build ./jenkins.yml'
+                bat label: '',script: 'faas-cli build ./jenkins.yml --images jenkins-tutorial'
             }
         }
     }
