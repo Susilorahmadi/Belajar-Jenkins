@@ -9,12 +9,14 @@ def handle(e, c):
     logging.info("=========== Response ============")
     
     if "/inquiry" in _fullPath :
-        inquiry = 'Anda sedang melakukan inquery'
+        inquiry = 'Berhasil Inquiry'
         logging.info(inquiry)
         return {"statusCode": 200,"body": inquiry}
     elif "/payment" in _fullPath :
-        payment = ''
-        return payment
+        inquiry = 'Berhasil Payment'
+        logging.info(inquiry)
+        return {"statusCode": 200,"body": inquiry}
     elif "/status" in _fullPath :
-        status = ''
-        return status
+        inquiry = 'Berhasil cek Status'
+        logging.info(inquiry)
+        return {"statusCode": 200,"body": inquiry}
