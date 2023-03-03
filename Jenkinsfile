@@ -32,7 +32,6 @@ pipeline {
                 bat label: '',script: 'faas-cli build -f jenkins.yml'
                 bat label: '',script: 'faas-cli login --username=admin --password=16c208c9436608208b51adc37c2ab4f2beb2250c58c6eef07848893bbb42dc9c'
                 bat label: '',script: 'faas-cli deploy -f jenkins.yml'
-                echo 'Behasil berhasil'
             }
         }
     }
