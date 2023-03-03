@@ -30,7 +30,7 @@ pipeline {
             steps{
                 bat label: '',script: 'faas-cli template pull https://github.com/openfaas-incubator/python-flask-template'
                 bat label: '',script: 'faas-cli build -f jenkins.yml'
-                bat label: '',script: 'faas-cli login --username=admin --password=16c208c9436608208b51adc37c2ab4f2beb2250c58c6eef07848893bbb42dc9c'
+                bat label: '',script: 'faas-cli login --username=admin --password=57a7e0df175225f4f89144ed449084fd17beb17b01856d2db07093c9b0c5888e'
                 bat label: '',script: 'faas-cli deploy -f jenkins.yml'
             }
         }
